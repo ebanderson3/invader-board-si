@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: ./frontend-svelte
+      dockerfile: ../Dockerfile.frontend
+    ports:
+      - "5000:5173"
+    volumes:
+      - ./frontend-svelte:/app
+    command: npm run dev
+
+  backend:
+    build:
+      context: ./backend-flask
+      dockerfile: ../Dockerfile.backend
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./backend-flask:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    command: python app.py
